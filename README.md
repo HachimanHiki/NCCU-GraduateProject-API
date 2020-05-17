@@ -13,3 +13,11 @@ $ npm install
 ```
 $ npm run dev
 ```
+
+### 04. 進到網頁
+
+- [http://localhost:3000/](http://localhost:3000/)
+
+### API Docs
+
+- [http://localhost:3000/docs](http://localhost:3000/docs)
