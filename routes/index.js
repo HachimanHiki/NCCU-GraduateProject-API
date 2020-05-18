@@ -13,7 +13,7 @@ let result = [];
 * @swagger
 * /get/geth:
 *    get:
-*      description: Revise Existing Prodcuts
+*      description: It is for consensus engine to get all transactions from Geth
 *      operationId: replaceProduct
 *      summary: Get transactions from Geth
 *      tags: [geth]
@@ -45,7 +45,7 @@ router.get('/get/geth', function(req, res, next) {
 * @swagger
 * /get/consensus:
 *    get:
-*      description: Send array of trasaction hashs
+*      description: It is for Geth to know the result after consensus algorithm
 *      operationId: replaceProduct
 *      summary: Get result from consensus engine
 *      tags: [consensus]
@@ -78,9 +78,9 @@ router.get('/get/consensus', function(req, res, next) {
 * @swagger
 * /post/geth:
 *    post:
-*      description: Revise Existing Prodcuts
+*      description: It is for Geth to post all transactions
 *      operationId: replaceProduct
-*      summary: Get transactions from Geth
+*      summary: Post transactions from Geth
 *      tags: [geth]
 *      requestBody:
 *        description: array of transactions hash    
@@ -121,8 +121,9 @@ router.post('/post/geth', upload.array(), function(req, res, next) {
 * @swagger
 * /post/consensus:
 *    post:
-*      description: Revise Existing Prodcuts
+*      description: It is for consensus engine to post the result
 *      operationId: replaceProduct
+*      summary: Post result from consensus engine
 *      tags: [consensus]
 *      requestBody:
 *        description: array of transactions hash    
