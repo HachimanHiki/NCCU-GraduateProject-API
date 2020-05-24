@@ -11,7 +11,7 @@ let result = [];
 
 /**
 * @swagger
-* /get/geth:
+* /geth:
 *    get:
 *      description: It is for consensus engine to get all transactions from Geth
 *      operationId: replaceProduct
@@ -29,7 +29,7 @@ let result = [];
 *         400:
 *           description: fail
 */
-router.get('/get/geth', function(req, res, next) {
+router.get('/geth', function(req, res, next) {
   try {
     res.send({
       transaction: allTransaction
@@ -43,7 +43,7 @@ router.get('/get/geth', function(req, res, next) {
 
 /**
 * @swagger
-* /get/consensus:
+* /consensus:
 *    get:
 *      description: It is for Geth to know the result after consensus algorithm
 *      operationId: replaceProduct
@@ -61,7 +61,7 @@ router.get('/get/geth', function(req, res, next) {
 *         400:
 *           description: fail
 */
-router.get('/get/consensus', function(req, res, next) {
+router.get('/consensus', function(req, res, next) {
   try {
     //console.log(result)
     res.send({
@@ -76,7 +76,7 @@ router.get('/get/consensus', function(req, res, next) {
 
 /**
 * @swagger
-* /post/geth:
+* /geth:
 *    post:
 *      description: It is for Geth to post all transactions
 *      operationId: replaceProduct
@@ -98,7 +98,7 @@ router.get('/get/consensus', function(req, res, next) {
 *         400:
 *           description: fail
 */
-router.post('/post/geth', upload.array(), function(req, res, next) {
+router.post('/geth', upload.array(), function(req, res, next) {
   try {
     allTransaction = req.body.transaction
     //result = []
@@ -143,7 +143,7 @@ router.post('/post/geth', upload.array(), function(req, res, next) {
 *         400:
 *           description: error
 */
-router.post('/post/consensus', upload.array(), function(req, res, next) {
+router.post('/consensus', upload.array(), function(req, res, next) {
   try {
     result = req.body.transaction
     res.send("success")
