@@ -24,8 +24,12 @@ let result = [];
 *             application/json:
 *               schema:
 *                 type: string
-*                 example: ["0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3", 
-*                           "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"]
+*                 example: {
+*                            transaction: [
+*                              "0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3", 
+*                              "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"
+*                            ]
+*                          }
 *         400:
 *           description: fail
 */
@@ -56,8 +60,12 @@ router.get('/geth', function(req, res, next) {
 *             application/json:
 *               schema:
 *                 type: string
-*                 example: ["0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3", 
-*                           "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"]
+*                 example: {
+*                            transaction: [
+*                              "0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3", 
+*                              "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"
+*                            ]
+*                          }
 *         400:
 *           description: fail
 */
@@ -89,9 +97,12 @@ router.get('/consensus', function(req, res, next) {
 *          application/json:
 *            schema:
 *               type: string
-*               example: 
-*                 transaction[0]: "0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3"
-*                 transaction[1]: "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"
+*               example: {
+*                            transaction: [
+*                              "0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3", 
+*                              "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"
+*                            ]
+*                        }
 *      responses:
 *         200:
 *           description: success
@@ -132,9 +143,12 @@ router.post('/geth', upload.array(), function(req, res, next) {
 *          application/json:
 *            schema:
 *               type: string
-*               example: 
-*                 transaction[0]: "0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3"
-*                 transaction[1]: "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"
+*               example: {
+*                            transaction: [
+*                              "0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3", 
+*                              "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"
+*                            ]
+*                        }
 *      security:
 *        - bearerAuth: []
 *      responses:
