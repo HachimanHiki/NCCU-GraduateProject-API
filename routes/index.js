@@ -114,12 +114,13 @@ router.post('/geth', upload.array(), function(req, res, next) {
     allTransaction = req.body.transaction
     //result = []
     // to replace consensus engine
+    /*
     if(allTransaction.length>2){
       result = allTransaction.slice(0, -2)
     }
     else{
       result = allTransaction
-    }
+    }*/
     res.send("success")
   }
   catch (error) {
