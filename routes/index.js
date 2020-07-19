@@ -3,11 +3,24 @@ var router = express.Router();
 var multer = require('multer');
 var upload = multer();
 
+const fs = require('fs');
+EC = require('elliptic').ec;
+ec = new EC('secp256k1');
+
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 let allTransaction = [];
 let result = [];
+let publicKeyList = [];
+
+fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
+  if (err) return console.log(err);
+  readfile2 = data.toString().split('\n');
+  for (i = 0; i < 6; i++) {
+    publicKeyList[i] = readfile2[i].replace(/[\r\n]/g, "");
+  }
+});
 
 /**
 * @swagger
@@ -33,7 +46,7 @@ let result = [];
 *         400:
 *           description: fail
 */
-router.get('/geth', function(req, res, next) {
+router.get('/geth', function (req, res, next) {
   try {
     res.send({
       transaction: allTransaction
@@ -69,7 +82,7 @@ router.get('/geth', function(req, res, next) {
 *         400:
 *           description: fail
 */
-router.get('/consensus', function(req, res, next) {
+router.get('/consensus', function (req, res, next) {
   try {
     //console.log(result)
     res.send({
@@ -109,7 +122,7 @@ router.get('/consensus', function(req, res, next) {
 *         400:
 *           description: fail
 */
-router.post('/geth', upload.array(), function(req, res, next) {
+router.post('/geth', upload.array(), function (req, res, next) {
   try {
     allTransaction = req.body.transaction
     //result = []
@@ -158,15 +171,44 @@ router.post('/geth', upload.array(), function(req, res, next) {
 *         400:
 *           description: error
 */
-router.post('/consensus', upload.array(), function(req, res, next) {
+router.post('/consensus', upload.array(), function (req, res, next) {
   try {
-    result = req.body.transaction
+    blockHash = req.body.blockHash
+    voteArr = req.body.vote // array
+    count = 0
+    /*
+    vote : {
+      type: "Vote",
+      height: height,
+      round: round,
+      sender: ID,
+      vote: blockBody,
+      blockHash: blockHash,
+      signature: signature
+    }
+    */
+
+    voteArr.foreach(vote => {
+      if (customVerify(vote) && vote.blockHash == blockHash) {
+        count += 1
+      }
+    })
+
+    if (count >= 5) {
+      result = req.body.transaction
+    }
+
     res.send("success")
   }
   catch (error) {
     res.send("fail")
   }
 });
+
+function customVerify(message) {
+  const publicKey = ec.keyFromPublic(publicKeyList[message.sender], 'hex');
+  return publicKey.verify(message.blockHash, message.signature);
+}
 
 // Swagger set up
 const options = {
