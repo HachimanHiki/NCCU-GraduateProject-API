@@ -178,11 +178,8 @@ router.post('/consensus', upload.array(), function (req, res, next) {
     count = 0
     /*
     vote : {
-      type: "Vote",
-      height: height,
-      round: round,
       sender: ID,
-      vote: blockBody,
+      voteHash: voteHash,
       blockHash: blockHash,
       signature: signature
     }
@@ -207,7 +204,7 @@ router.post('/consensus', upload.array(), function (req, res, next) {
 
 function customVerify(message) {
   const publicKey = ec.keyFromPublic(publicKeyList[message.sender], 'hex');
-  return publicKey.verify(message.blockHash, message.signature);
+  return publicKey.verify(message.voteHash, message.signature);
 }
 
 // Swagger set up
