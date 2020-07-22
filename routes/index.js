@@ -184,12 +184,21 @@ router.post('/consensus', upload.array(), function (req, res, next) {
       signature: signature
     }
     */
-
+   // voteArr is a object
+   /*
     voteArr.foreach(vote => {
       if (customVerify(vote) && vote.blockHash == blockHash) {
         count += 1
       }
     })
+    */
+   for (i = 0; i < voteArr.length; i++){
+     vote = voteArr[i]
+     if (customVerify(vote) && vote.blockHash == blockHash) {
+      count += 1
+    }
+   }
+   
 
     if (count >= 5) {
       result = req.body.transaction
