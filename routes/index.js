@@ -26,41 +26,6 @@ fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
   }
 });
 
-/**
-* @swagger
-* /geth:
-*    get:
-*      description: It is for consensus engine to get all transactions from Geth
-*      operationId: replaceProduct
-*      summary: Get transactions from Geth
-*      tags: [geth]
-*      responses:
-*         200:
-*           description: array of transaction hashs
-*           content:
-*             application/json:
-*               schema:
-*                 type: string
-*                 example: {
-*                            transaction: [
-*                              "0xac8a5a7899d4d995ef2054220cf1980af4d2afd48c3a7cb2ee845c9a60d3a3a3", 
-*                              "0xb5e2737e053512ec8c376482bd024e2c8b6860907664cc9796bf7150fdd08dc3"
-*                            ]
-*                          }
-*         400:
-*           description: fail
-*/
-router.get('/geth', function (req, res, next) {
-  try {
-    res.send({
-      transaction: allTransaction
-    })
-  }
-  catch (error) {
-    res.send("fail")
-  }
-});
-
 
 /**
 * @swagger
@@ -146,6 +111,12 @@ router.post('/geth', upload.array(), function (req, res, next) {
           transaction: allTransaction,
           height: height
         }
+      })
+      .then(function(responses){
+        console.log(responses)
+      })
+      .catch(function(error){
+        console.log(error)
       })
     })
 
