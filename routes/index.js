@@ -6,6 +6,7 @@ var upload = multer();
 const fs = require('fs');
 EC = require('elliptic').ec;
 ec = new EC('secp256k1');
+const axios = require('axios');
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -13,6 +14,9 @@ const swaggerUi = require('swagger-ui-express');
 let allTransaction = [];
 let result = [];
 let publicKeyList = [];
+let height = 1
+const consensusIP = '10.232.230.177:'
+const consensusPort = ['1000', '2000', '3000', '4000', '5000', '6000']
 
 fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
   if (err) return console.log(err);
@@ -134,6 +138,17 @@ router.post('/geth', upload.array(), function (req, res, next) {
     else{
       result = allTransaction
     }*/
+    consensusPort.forEach(async port => {
+      axios({
+        method: 'post',
+        url: 'http://' + consensusIP + port + '/Height',
+        data: {
+          transaction: allTransaction,
+          height: height
+        }
+      })
+    })
+
     res.send("success")
   }
   catch (error) {
@@ -202,6 +217,7 @@ router.post('/consensus', upload.array(), function (req, res, next) {
 
     if (count >= 5) {
       result = req.body.transaction
+      height +=1
     }
 
     res.send("success")
