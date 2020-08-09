@@ -14,9 +14,9 @@ const swaggerUi = require('swagger-ui-express');
 let allTransaction = [];
 let result = [];
 let publicKeyList = [];
-let height = 1
-const consensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62']
-const consensusPort = ':1050'
+let height = 1;
+const consensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62'];
+const consensusPort = ':1050';
 
 fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
   if (err) return console.log(err);
