@@ -15,8 +15,8 @@ let allTransaction = [];
 let result = [];
 let publicKeyList = [];
 let height = 1
-const consensusIP = '10.232.230.177:'
-const consensusPort = ['1000', '2000', '3000', '4000', '5000', '6000']
+const consensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62']
+const consensusPort = ':1050'
 
 fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
   if (err) return console.log(err);
@@ -103,20 +103,21 @@ router.post('/geth', upload.array(), function (req, res, next) {
     else{
       result = allTransaction
     }*/
-    consensusPort.forEach(async port => {
-      axios({
+    consensusIP.forEach(async ip => {
+      
+      await axios({
         method: 'post',
-        url: 'http://' + consensusIP + port + '/Height',
+        url: 'http://' + ip + consensusPort + '/Height',
         data: {
           transaction: allTransaction,
           height: height
         }
       })
       .then(function(responses){
-        console.log(responses)
+        console.log(responses.data)
       })
       .catch(function(error){
-        console.log(error)
+        console.log(error.data)
       })
     })
 
