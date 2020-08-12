@@ -94,7 +94,7 @@ router.get('/consensus', function (req, res, next) {
 router.post('/geth', upload.array(), function (req, res, next) {
   try {
     allTransaction = req.body.transaction
-    //result = []
+    result = []
     // to replace consensus engine
     /*
     if(allTransaction.length>2){
