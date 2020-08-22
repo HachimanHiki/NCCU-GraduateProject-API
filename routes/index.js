@@ -93,7 +93,6 @@ router.get('/consensus', function (req, res, next) {
 router.post('/geth', upload.array(), function (req, res, next) {
   try {
     allTransaction = req.body.transaction
-    console.log(req.body)
     result = []
     // to replace consensus engine
     /*
@@ -110,9 +109,9 @@ router.post('/geth', upload.array(), function (req, res, next) {
         url: 'http://' + ip + consensusPort + '/Height',
         data: {
           transaction: allTransaction,
+          receiverAddress: req.body.receiverAddress,
           height: req.body.blockHeight,
-          parentHash: req.body.parentHash,
-          receiverAddress: req.body.receiverAddress
+          parentHash: req.body.parentHash
         }
       })
       .then(function(responses){
@@ -191,7 +190,6 @@ router.post('/consensus', upload.array(), function (req, res, next) {
 
     if (count >= 5) {
       result = req.body.transaction
-      height +=1
     }
 
     res.send("success")
