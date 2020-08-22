@@ -14,7 +14,6 @@ const swaggerUi = require('swagger-ui-express');
 let allTransaction = [];
 let result = [];
 let publicKeyList = [];
-let height = 1;
 const consensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62'];
 const consensusPort = ':1050';
 
@@ -94,6 +93,7 @@ router.get('/consensus', function (req, res, next) {
 router.post('/geth', upload.array(), function (req, res, next) {
   try {
     allTransaction = req.body.transaction
+    console.log(req.body)
     result = []
     // to replace consensus engine
     /*
@@ -110,7 +110,9 @@ router.post('/geth', upload.array(), function (req, res, next) {
         url: 'http://' + ip + consensusPort + '/Height',
         data: {
           transaction: allTransaction,
-          height: height
+          height: req.body.blockHeight,
+          parentHash: req.body.parentHash,
+          receiverAddress: req.body.receiverAddress
         }
       })
       .then(function(responses){
