@@ -11,6 +11,7 @@ const axios = require('axios');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
+let flag = 0
 let allTransaction = [];
 let result = [];
 let publicKeyList = [];
@@ -93,6 +94,7 @@ router.get('/consensus', function (req, res, next) {
 router.post('/geth', upload.array(), function (req, res, next) {
   try {
     allTransaction = req.body.transaction
+    flag = req.body.blockHeight
     result = []
     // to replace consensus engine
     /*
@@ -188,9 +190,10 @@ router.post('/consensus', upload.array(), function (req, res, next) {
    }
    
 
-    if (count >= 5) {
+    if ( flag != 0 && count >= 5) {
+      flag = 0
       result = req.body.transaction
-      if (result.length ==0 ){
+      if (result.length == 0 ){
         result = ['0xabc']
       }
     }
