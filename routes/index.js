@@ -190,7 +190,7 @@ router.post('/consensus', upload.array(), function (req, res, next) {
    }
    
 
-    if ( flag != 0 && count >= 5) {
+    if ( flag >= 1 && count >= 5) {
       flag = 0
       result = req.body.transaction
       if (result.length == 0 ){
