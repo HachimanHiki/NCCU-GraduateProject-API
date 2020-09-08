@@ -94,36 +94,37 @@ router.get('/consensus', function (req, res, next) {
 router.post('/geth', upload.array(), function (req, res, next) {
   try {
     allTransaction = req.body.transaction
-    flag = req.body.blockHeight
-    result = []
-    // to replace consensus engine
-    /*
-    if(allTransaction.length>2){
-      result = allTransaction.slice(0, -2)
-    }
-    else{
-      result = allTransaction
-    }*/
-    consensusIP.forEach(async ip => {
-      
-      await axios({
-        method: 'post',
-        url: 'http://' + ip + consensusPort + '/Height',
-        data: {
-          transaction: allTransaction,
-          receiverAddress: req.body.receiverAddress,
-          height: req.body.blockHeight,
-          parentHash: req.body.parentHash
-        }
-      })
-      .then(function(responses){
-        console.log(responses.data)
-      })
-      .catch(function(error){
-        console.log(error.data)
-      })
-    })
+    if (flag != req.body.blockHeight) {
+      flag = req.body.blockHeight
+      result = []
+      // to replace consensus engine
+      /*
+      if(allTransaction.length>2){
+        result = allTransaction.slice(0, -2)
+      }
+      else{
+        result = allTransaction
+      }*/
+      consensusIP.forEach(async ip => {
 
+        await axios({
+          method: 'post',
+          url: 'http://' + ip + consensusPort + '/Height',
+          data: {
+            transaction: allTransaction,
+            receiverAddress: req.body.receiverAddress,
+            height: req.body.blockHeight,
+            parentHash: req.body.parentHash
+          }
+        })
+        .then(function (responses) {
+          console.log(responses.data)
+        })
+        .catch(function (error) {
+          console.log(error.data)
+        })
+      })
+    }
     res.send("success")
   }
   catch (error) {
@@ -174,26 +175,26 @@ router.post('/consensus', upload.array(), function (req, res, next) {
       signature: signature
     }
     */
-   // voteArr is a object
-   /*
-    voteArr.foreach(vote => {
+    // voteArr is a object
+    /*
+     voteArr.foreach(vote => {
+       if (customVerify(vote) && vote.blockHash == blockHash) {
+         count += 1
+       }
+     })
+     */
+    for (i = 0; i < voteArr.length; i++) {
+      vote = voteArr[i]
       if (customVerify(vote) && vote.blockHash == blockHash) {
         count += 1
       }
-    })
-    */
-   for (i = 0; i < voteArr.length; i++){
-     vote = voteArr[i]
-     if (customVerify(vote) && vote.blockHash == blockHash) {
-      count += 1
     }
-   }
-   
 
-    if ( flag >= 1 && count >= 5) {
+
+    if (flag >= 1 && count >= 5) {
       flag = 0
       result = req.body.transaction
-      if (result.length == 0 ){
+      if (result.length == 0) {
         result = ['0xabc']
       }
     }
