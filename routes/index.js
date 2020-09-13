@@ -11,7 +11,7 @@ const axios = require('axios');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-let flag = 0;
+let lock = 0;
 let height = 0;
 let allTransaction = [];
 let result = [];
@@ -54,7 +54,6 @@ fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
 */
 router.get('/consensus', function (req, res, next) {
   try {
-    //console.log(result)
     res.send({
       transaction: result
     })
@@ -97,7 +96,7 @@ router.post('/geth', upload.array(), function (req, res, next) {
     allTransaction = req.body.transaction
     if (height != req.body.blockHeight) {
       height = req.body.blockHeight
-      flag = 1
+      lock = 1
       result = []
       // to replace consensus engine
       /*
@@ -193,8 +192,8 @@ router.post('/consensus', upload.array(), function (req, res, next) {
     }
 
 
-    if (flag == 1 && count >= 5) {
-      flag = 0
+    if (lock == 1 && count >= 5) {
+      lock = 0
       result = req.body.transaction
       if (result.length == 0) {
         result = ['0xabc']
