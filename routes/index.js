@@ -168,7 +168,7 @@ router.post('/geth', upload.array(), function (req, res, next) {
 router.post('/consensus', upload.array(), function (req, res, next) {
   try {
     blockHash = req.body.blockHash
-    voteArr = req.body.vote // array
+    voteArr = req.body.vote // object array
     count = 0
     /*
     vote : {
@@ -178,21 +178,11 @@ router.post('/consensus', upload.array(), function (req, res, next) {
       signature: signature
     }
     */
-    // voteArr is a object
-    /*
-     voteArr.foreach(vote => {
-       if (customVerify(vote) && vote.blockHash == blockHash) {
-         count += 1
-       }
-     })
-     */
-    for (i = 0; i < voteArr.length; i++) {
-      vote = voteArr[i]
+    Object.values(voteArr).map(vote => {
       if (customVerify(vote) && vote.blockHash == blockHash) {
         count += 1
       }
-    }
-
+    })
 
     if (lock == 1 && count >= 5) {
       lock = 0
