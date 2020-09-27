@@ -15,7 +15,6 @@ let lock = 0;
 let height = 0;
 let allTransaction = [];
 let result = [];
-let preResult = [];
 let publicKeyList = [];
 const consensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62'];
 const consensusPort = ':1050';
@@ -56,8 +55,7 @@ fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
 router.get('/consensus', function (req, res, next) {
   try {
     res.send({
-      //transaction: result
-      transaction: preResult
+      transaction: result
     })
   }
   catch (error) {
@@ -188,9 +186,9 @@ router.post('/consensus', upload.array(), function (req, res, next) {
       lock = 0
       result = req.body.transaction
       if (result.length == 0) {
+        console.log("test")
         result = ['0xabc']
       }
-      preResult = result
     }
 
     res.send("success")
