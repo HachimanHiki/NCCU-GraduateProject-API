@@ -186,10 +186,6 @@ router.post('/consensus', upload.array(), function (req, res, next) {
     if (lock == 1 && count >= 5) {
       lock = 0
       result = req.body.transaction
-      if (result.length == 0) {
-        console.log("test")
-        result = ['0xabc']
-      }
     }
 
     res.send("success")
