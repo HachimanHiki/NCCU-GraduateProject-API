@@ -106,25 +106,28 @@ router.post('/geth', upload.array(), function (req, res, next) {
       else{
         result = allTransaction
       }*/
-      consensusIP.forEach(async ip => {
+      console.log(height + "," + lock)
+      setTimeout(()=>{
+        consensusIP.forEach(async ip => {
 
-        await axios({
-          method: 'post',
-          url: 'http://' + ip + consensusPort + '/Height',
-          data: {
-            transaction: allTransaction,
-            receiverAddress: req.body.receiverAddress,
-            height: req.body.blockHeight,
-            parentHash: req.body.parentHash
-          }
+          await axios({
+            method: 'post',
+            url: 'http://' + ip + consensusPort + '/Height',
+            data: {
+              transaction: allTransaction,
+              receiverAddress: req.body.receiverAddress,
+              height: req.body.blockHeight,
+              parentHash: req.body.parentHash
+            }
+          })
+          .then(function (responses) {
+            console.log(responses.data)
+          })
+          .catch(function (error) {
+            console.log(error.data)
+          })
         })
-        .then(function (responses) {
-          console.log(responses.data)
-        })
-        .catch(function (error) {
-          console.log(error.data)
-        })
-      })
+      }, 1000)
     }
     res.send("success")
   }
