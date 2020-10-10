@@ -182,7 +182,7 @@ router.post('/consensus', upload.array(), function (req, res, next) {
       }
     })
 
-    console.log(lock+","+count)
+    console.log(height+","+lock+","+count)
     if (lock == 1 && count >= 5) {
       lock = 0
       result = req.body.transaction
