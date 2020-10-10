@@ -106,10 +106,8 @@ router.post('/geth', upload.array(), function (req, res, next) {
       else{
         result = allTransaction
       }*/
-      console.log(height + "," + lock)
       setTimeout(()=>{
         consensusIP.forEach(async ip => {
-
           await axios({
             method: 'post',
             url: 'http://' + ip + consensusPort + '/Height',
@@ -185,7 +183,6 @@ router.post('/consensus', upload.array(), function (req, res, next) {
       }
     })
 
-    console.log(height+","+lock+","+count)
     if (lock == 1 && count >= 5) {
       lock = 0
       result = req.body.transaction
@@ -193,7 +190,6 @@ router.post('/consensus', upload.array(), function (req, res, next) {
         console.log("test")
         result = ['0xabc']
       }
-      console.log(result)
     }
 
     res.send("success")
