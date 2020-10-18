@@ -14,7 +14,7 @@ const swaggerUi = require('swagger-ui-express');
 //let lock = 0;
 let height = 0;
 let allTransaction = [];
-let result = [];
+let resultObjs = [];
 let publicKeyList = [];
 const consensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62'];
 const consensusPort = ':1050';
@@ -54,9 +54,18 @@ fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
 */
 router.get('/consensus', function (req, res, next) {
   try {
-    res.send({
-      transaction: result
-    })
+    if(!resultObjs[height]){
+      res.send({
+        //transaction: result
+        transaction: []
+      })
+    }
+    else{
+      res.send({
+        //transaction: result
+        transaction: resultObjs[height].transaction
+      })
+    }
   }
   catch (error) {
     res.send("fail")
@@ -97,7 +106,7 @@ router.post('/geth', upload.array(), function (req, res, next) {
     if (height != req.body.blockHeight) {
       height = req.body.blockHeight
       //lock = 1
-      result = []
+      //result = []
       // to replace consensus engine
       /*
       if(allTransaction.length>2){
@@ -166,6 +175,7 @@ router.post('/geth', upload.array(), function (req, res, next) {
 */
 router.post('/consensus', upload.array(), function (req, res, next) {
   try {
+    height = req.body.height
     blockHash = req.body.blockHash
     voteArr = req.body.vote // object array
     count = 0
@@ -186,7 +196,9 @@ router.post('/consensus', upload.array(), function (req, res, next) {
     if (count >= 5) {
     //if (lock == 1 && count >= 5) {
       //lock = 0
-      result = req.body.transaction
+      //result = req.body.transaction
+      resultObjs[height] = new Object()
+      resultObjs[height].transaction = req.body.transaction
     }
 
     res.send("success")
