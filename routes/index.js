@@ -107,10 +107,12 @@ router.post('/geth', upload.array(), function (req, res, next) {
       // to replace consensus engine
       /*
       if(allTransaction.length>2){
-        result = allTransaction.slice(0, -2)
+        resultObjs[height] = new Object()
+        resultObjs[height].transaction = allTransaction.slice(0, -2)
       }
       else{
-        result = allTransaction
+        resultObjs[height] = new Object()
+        resultObjs[height].transaction = allTransaction
       }*/
       ConsensusIP.forEach(async ip => {
         await axios({
