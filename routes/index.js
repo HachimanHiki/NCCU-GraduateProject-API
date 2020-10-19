@@ -103,7 +103,6 @@ router.post('/geth', upload.array(), function (req, res, next) {
     allTransaction = req.body.transaction
     if (height != req.body.blockHeight) {
       height = req.body.blockHeight
-      //lock = 1
       // to replace consensus engine
       /*
       if(allTransaction.length>2){
@@ -191,8 +190,6 @@ router.post('/consensus', upload.array(), function (req, res, next) {
     })
 
     if (count >= 5) {
-    //if (lock == 1 && count >= 5) {
-      //lock = 0
       resultObjs[height] = new Object()
       resultObjs[height].transaction = req.body.transaction
     }
