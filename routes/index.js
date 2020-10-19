@@ -11,7 +11,6 @@ const axios = require('axios');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-//let lock = 0;
 let height = 0;
 let allTransaction = [];
 let resultObjs = [];
