@@ -16,13 +16,15 @@ let height = 0;
 let allTransaction = [];
 let resultObjs = [];
 let publicKeyList = [];
-const consensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62'];
-const consensusPort = ':1050';
+const NumOfConsensus = 6;
+const NumOfLegalVoteForBlock = 5;
+const ConsensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62'];
+const ConsensusPort = ':1050';
 
 fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
   if (err) return console.log(err);
   readfile2 = data.toString().split('\n');
-  for (i = 0; i < 6; i++) {
+  for (i = 0; i < NumOfConsensus; i++) {
     publicKeyList[i] = readfile2[i].replace(/[\r\n]/g, "");
   }
 });
@@ -111,10 +113,10 @@ router.post('/geth', upload.array(), function (req, res, next) {
       else{
         result = allTransaction
       }*/
-      consensusIP.forEach(async ip => {
+      ConsensusIP.forEach(async ip => {
         await axios({
           method: 'post',
-          url: 'http://' + ip + consensusPort + '/Height',
+          url: 'http://' + ip + ConsensusPort + '/Height',
           data: {
             transaction: allTransaction,
             receiverAddress: req.body.receiverAddress,
@@ -187,7 +189,7 @@ router.post('/consensus', upload.array(), function (req, res, next) {
       }
     })
 
-    if (count >= 5) {
+    if (count >= NumOfLegalVoteForBlock) {
       resultObjs[height] = new Object()
       resultObjs[height].transaction = req.body.transaction
     }
