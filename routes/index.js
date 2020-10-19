@@ -54,12 +54,12 @@ fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
 */
 router.get('/consensus', function (req, res, next) {
   try {
-    if(!resultObjs[height]){
+    if (!resultObjs[height]) {
       res.send({
         transaction: []
       })
     }
-    else{
+    else {
       res.send({
         transaction: resultObjs[height].transaction
       })
@@ -111,26 +111,24 @@ router.post('/geth', upload.array(), function (req, res, next) {
       else{
         result = allTransaction
       }*/
-      //setTimeout(()=>{
-        consensusIP.forEach(async ip => {
-          await axios({
-            method: 'post',
-            url: 'http://' + ip + consensusPort + '/Height',
-            data: {
-              transaction: allTransaction,
-              receiverAddress: req.body.receiverAddress,
-              height: req.body.blockHeight,
-              parentHash: req.body.parentHash
-            }
-          })
-          .then(function (responses) {
-            console.log(responses.data)
-          })
-          .catch(function (error) {
-            console.log(error.data)
-          })
+      consensusIP.forEach(async ip => {
+        await axios({
+          method: 'post',
+          url: 'http://' + ip + consensusPort + '/Height',
+          data: {
+            transaction: allTransaction,
+            receiverAddress: req.body.receiverAddress,
+            height: req.body.blockHeight,
+            parentHash: req.body.parentHash
+          }
         })
-      //}, 1000)
+        .then(function (responses) {
+          console.log(responses.data)
+        })
+        .catch(function (error) {
+          console.log(error.data)
+        })
+      })
     }
     res.send("success")
   }
