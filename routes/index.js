@@ -56,13 +56,11 @@ router.get('/consensus', function (req, res, next) {
   try {
     if(!resultObjs[height]){
       res.send({
-        //transaction: result
         transaction: []
       })
     }
     else{
       res.send({
-        //transaction: result
         transaction: resultObjs[height].transaction
       })
     }
@@ -106,7 +104,6 @@ router.post('/geth', upload.array(), function (req, res, next) {
     if (height != req.body.blockHeight) {
       height = req.body.blockHeight
       //lock = 1
-      //result = []
       // to replace consensus engine
       /*
       if(allTransaction.length>2){
@@ -196,7 +193,6 @@ router.post('/consensus', upload.array(), function (req, res, next) {
     if (count >= 5) {
     //if (lock == 1 && count >= 5) {
       //lock = 0
-      //result = req.body.transaction
       resultObjs[height] = new Object()
       resultObjs[height].transaction = req.body.transaction
     }
