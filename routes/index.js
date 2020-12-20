@@ -102,7 +102,7 @@ router.get('/consensus', function (req, res, next) {
 router.post('/geth', upload.array(), function (req, res, next) {
   try {
     allTransaction = req.body.transaction
-    if (height != req.body.blockHeight) {
+    if (height < req.body.blockHeight) {
       height = req.body.blockHeight
       // to replace consensus engine
       /*
