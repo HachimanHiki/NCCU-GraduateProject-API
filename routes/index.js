@@ -15,10 +15,11 @@ let height = 0;
 let allTransaction = [];
 let resultObjs = [];
 let publicKeyList = [];
-const NumOfConsensus = 6;
-const NumOfLegalVoteForBlock = 5;
 const ConsensusIP = ['54.209.224.158', '54.224.45.72', '54.164.99.38', '54.237.56.147', '52.201.212.99', '54.145.83.62'];
 const ConsensusPort = ':1050';
+const NumOfConsensus = ConsensusIP.length;
+// according to 2-step-BFT, N >= 5F + 1
+const NumOfLegalVoteForBlock = NumOfConsensus - Math.floor((NumOfConsensus-1) / 5);
 
 fs.readFile('publicKey.txt', function (err, data) {	//建立公鑰
   if (err) return console.log(err);
