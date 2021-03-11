@@ -10,7 +10,7 @@
     "axios": "^0.21.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "elliptic": "^6.5.3",
+    "elliptic": "^6.5.4",
     "express": "~4.16.1",
     "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
